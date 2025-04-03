@@ -1,7 +1,5 @@
 package com.qnxy.newapi.data.req
 
-import java.math.BigDecimal
-
 
 data class GameLaunchReq(
 
@@ -10,14 +8,6 @@ data class GameLaunchReq(
      * 平台提供
      */
     val gameCode: String,
-
-    /**
-     * 游戏结算货币
-     * 如：BR_BRL (巴西_雷亚尔)
-     *
-     * 具体支持情况请查看支持文档
-     */
-    val currency: String,
 
     /**
      * 当前游戏语言
@@ -29,13 +19,6 @@ data class GameLaunchReq(
     val long: String = "en",
 
     /**
-     * 当前游戏玩家唯一id
-     *
-     * 最大长度为: xxx
-     */
-    val playerUniqueId: String,
-
-    /**
      * 用户当前 RTP
      * 如果该值为 0 或 null 则使用子商户rtp
      * 如果子商户没有设置 rtp 使用 商户的(商户为必填项)
@@ -44,7 +27,7 @@ data class GameLaunchReq(
 
     /**
      * 子商户编码
-     * 如果不为空则使用子商户相关配置
+     * 如果不为空则使用子商户
      */
     val subMerchantCode: String?,
 
@@ -65,52 +48,44 @@ data class GameLaunchReq(
     val gameSession: String,
 
     /**
-     * 钱包类型 [WalletType]
+     * 钱包类型 [TransferType]
      * 默认: 单一钱包
      */
-    val walletType: WalletType = WalletType.CALLBACK,
-
-    /**
-     * 当前玩家余额
-     *
-     * 在钱包类型为
-     *  单一钱包: 该值不会使用
-     *  转账钱包: 该值必填并且要求大于零
-     */
-    val playerBalance: BigDecimal = BigDecimal.ZERO
+    val transferType: TransferType = TransferType.CALLBACK
 )
+
 
 /**
  * 游戏终端类型
  */
-enum class GameDisplayMode(val mode: Int) {
+enum class GameDisplayMode() {
 
     /**
      * pc 终端
      */
-    PC(0),
+    PC,
 
     /**
      * 手机终端
      */
-    PHONE(1),
+    PHONE,
 
 }
 
 /**
- * 钱包类型
+ * 转账类型
  */
-enum class WalletType(val mode: Int) {
+enum class TransferType {
 
     /**
      * 单一钱包
      * 平台主动回调
      */
-    CALLBACK(0),
+    CALLBACK,
 
     /**
      * 转账钱包
      * 商户主动查询
      */
-    QUERYING(1),
+    QUERYING,
 }

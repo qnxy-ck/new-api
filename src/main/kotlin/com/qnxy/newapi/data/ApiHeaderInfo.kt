@@ -14,7 +14,7 @@ data class ApiHeaderInfo(
     /**
      * 那个商户, 平台提供
      */
-    val appId: String,
+    val merchantCode: String,
 
     /**
      * 当前请求时间戳 (UTC时区)
@@ -33,7 +33,7 @@ data class ApiHeaderInfo(
      * 用于验证请求接口参数
      *
      * 签名规则
-     *  appId: xxx
+     *  merchantCode: xxx
      *  timestamp: xxx
      *  nonce: xxx
      *  singType: xx
@@ -48,19 +48,12 @@ data class ApiHeaderInfo(
 
 )
 
-enum class SignType(
-    @JsonValue
-    val type: Int
-) {
+enum class SignType {
 
-    HMAC_SHA256(0)
+    HMAC_SHA256,
 
-    ;
 
-    companion object {
 
-        @JsonCreator
-        fun typeOf(type: Int) = values().find { it.type == type } ?: throw ApiException("Unsupported sign type $type")
 
-    }
+
 }

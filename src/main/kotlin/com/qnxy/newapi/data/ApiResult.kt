@@ -1,5 +1,8 @@
 package com.qnxy.newapi.data
 
+import org.gradle.internal.impldep.org.joda.time.LocalDateTime
+import java.time.ZonedDateTime
+
 /**
  * Api返回结果
  * 接口 http 状态码统一返回 200
@@ -9,6 +12,7 @@ package com.qnxy.newapi.data
  * @author Qnxy
  */
 
+@Suppress("DATA_CLASS_COPY_VISIBILITY_WILL_BE_CHANGED_WARNING", "DataClassPrivateConstructor")
 data class ApiResult<T> private constructor(
     /**
      * 当前状态描述消息
@@ -19,17 +23,24 @@ data class ApiResult<T> private constructor(
      * 当前状态码
      */
     val statusCode: String,
+
+    /**
+     * 当前时间戳信息
+     * yyyy-MM-dd HH:mm:ss SSSXXX
+     */
+    val timestamp: ZonedDateTime = ZonedDateTime.now(),
+
     val data: T?
 ) {
 
     companion object {
 
         fun <T> successful(data: T? = null): ApiResult<T> {
-            return ApiResult<T>("ok", "ok", data)
+            return ApiResult("ok", "ok", data = data)
         }
 
         fun <T, E> failure(status: E, data: T? = null, vararg args: Any): ApiResult<T> where E : ApiState, E : Enum<E> {
-            return ApiResult<T>(status.statusMsg(args), status.statusCode, data)
+            return ApiResult(status.statusMsg(args), status.statusCode, data = data)
         }
     }
 }
@@ -49,10 +60,13 @@ interface ApiState {
 /**
  * 公共状态定义
  */
-enum class ApiCommonState(
-    override val statusCode: String,
-) : ApiState {
+enum class ApiCommonState : ApiState {
 
-    SUCCESSFUL("C000001")
+    SUCCESSFUL
+
+    ;
+
+    override val statusCode: String
+        get() = this.name
 
 }

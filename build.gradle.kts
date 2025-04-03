@@ -1,11 +1,9 @@
 plugins {
-    kotlin("jvm") version "1.9.25"
+    kotlin("jvm") version "2.1.20"
     id("org.gradle.kotlin.kotlin-dsl") version "5.2.0"
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
-
-    id("org.jetbrains.dokka") version "1.9.20"
 
 }
 
