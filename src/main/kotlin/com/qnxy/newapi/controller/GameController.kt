@@ -1,17 +1,16 @@
 package com.qnxy.newapi.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.qnxy.newapi.data.ApiCommonState
 import com.qnxy.newapi.data.ApiResult
 import com.qnxy.newapi.data.req.GameLaunchReq
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.coroutines.delay
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import com.qnxy.newapi.data.ApiHeaderInfo
-import com.qnxy.newapi.data.GameItem
+import com.qnxy.newapi.data.resp.GameItemResp
+import org.springframework.web.bind.annotation.GetMapping
 
 private val log = KotlinLogging.logger { }
 
@@ -42,20 +41,22 @@ class GameController(
 
 
     /**
-     *
+     * 获取游戏列表信息
      */
-    @PostMapping("/gameList")
-    fun gameList(): ApiResult<List<GameItem>> {
+    @GetMapping("/gameList")
+    fun gameList(): ApiResult<List<GameItemResp>> {
 
         return ApiResult.successful(
             listOf(
-                GameItem(
-                    "code",
-                    "name",
-                )
+                GameItemResp("code", "name",)
             )
         )
     }
+
+    /**
+     * 回调投注信息
+     */
+
 
 }
 
